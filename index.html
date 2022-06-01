@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="sorting-visualizer.css">
+    <title>
+        Sorting Visualizer
+    </title>
+</head>
+<header>
+    <button id="newarr">New array</button>
+    <span style="font-size: large; color: white; font-family: 'Open Sans', 'sans-serif';">
+        Select Size & Speed   <input id="sizer" type="range" min=20 max=150 step=1 value=60>
+    </span>
+    <button id="bubble">Bubble Sort</button>
+    <button id="selection">Selection Sort</button>
+    <button id="insertion">Insertion Sort</button>
+    <button id="merge">Merge Sort</button>
+    <button id="quick">Quick Sort</button>
+</header>
+
+<body>
+    <div id="bar"></div>
+    <script src="algorithms/sorting-visualizer.js"></script>
+    <script src="algorithms/bubble.js"></script>
+    <script src="algorithms/selection.js"></script>
+    <script src="algorithms/insertion.js"></script>
+    <script src="algorithms/mergesort.js"></script>
+    <script src="algorithms/quicksort.js"></script>
+</body>
+
+</html>
