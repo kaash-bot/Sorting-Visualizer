@@ -1,9 +1,15 @@
 #include<SDL2/SDL.h>
+#include<chrono>
+#include<bits/stdc++.h>
 #include<iostream>
 #include<limits>
+#include<ctime>
+#include<cmath>
 #include<time.h>
+
 #include<string>
 using namespace std;
+using namespace std::chrono;
 
 const int SCREEN_WIDTH=910;
 const int SCREEN_HEIGHT=750;
@@ -123,7 +129,7 @@ void inplaceHeapSort(int* input, int n)
            }
 
            visualize(parentIndex, childIndex);
-           SDL_Delay(40);
+           SDL_Delay(5);
 
            childIndex=parentIndex;
            parentIndex=(childIndex-1)/2;
@@ -162,13 +168,21 @@ void inplaceHeapSort(int* input, int n)
             input[maxIndex]=temp;
 
             visualize(maxIndex, parentIndex, heapLast);
-            SDL_Delay(40);
+            SDL_Delay(5);
 
             parentIndex=maxIndex;
             leftChildIndex=2*parentIndex + 1;
             rightChildIndex=2*parentIndex + 2;
         }
     }
+}
+
+void heap_call(int* input, int n){
+    auto start = high_resolution_clock::now();
+    inplaceHeapSort(input, n);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "Time Taken: " << duration.count() << "s" << endl;
 }
 
 int partition_array(int a[], int si, int ei)
@@ -207,7 +221,7 @@ int partition_array(int a[], int si, int ei)
             a[i]=temp_1;
 
             visualize(i, j);
-            SDL_Delay(70);
+            SDL_Delay(5);
 
             i++;
             j--;
@@ -227,6 +241,14 @@ void quickSort(int a[], int si, int ei)
     quickSort(a, si, c-1);
     quickSort(a, c+1, ei);
 
+}
+
+void quicksort_call(int a[], int si, int ei){
+    auto start = high_resolution_clock::now();
+    quickSort(a, si, ei);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "Time Taken: " << duration.count() << "s" << endl;
 }
 
 void merge2SortedArrays(int a[], int si, int ei)
@@ -273,7 +295,7 @@ void merge2SortedArrays(int a[], int si, int ei)
     {
         a[l]=output[x];
         visualize(l);
-        SDL_Delay(15);
+        SDL_Delay(5);
         x++;
     }
     delete []output;
@@ -293,6 +315,14 @@ void mergeSort(int a[], int si, int ei)
     merge2SortedArrays(a, si, ei);
 }
 
+void mergesort_call(int a[], int si, int ei){
+    auto start = high_resolution_clock::now();
+    mergeSort(a, si, ei);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "Time Taken: " << duration.count() << "s" << endl;
+}
+
 void bubbleSort()
 {
     for(int i=0; i<arrSize-1; i++)
@@ -307,9 +337,17 @@ void bubbleSort()
 
                 visualize(j+1, j, arrSize-i);
             }
-            SDL_Delay(1);
+            SDL_Delay(5);
         }
     }
+}
+
+void bub_sort_call(){
+    auto start = high_resolution_clock::now();
+    bubbleSort();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "Time Taken: " << duration.count() << "s" << endl;
 }
 
 void insertionSort()
@@ -330,6 +368,14 @@ void insertionSort()
     }
 }
 
+void ins_sort_call(){
+    auto start = high_resolution_clock::now();
+    insertionSort();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "Time Taken: " << duration.count() << "s" << endl;
+}
+
 void selectionSort()
 {
     int minIndex;
@@ -343,12 +389,20 @@ void selectionSort()
                 minIndex=j;
                 visualize(i, minIndex);
             }
-            SDL_Delay(1);
+            SDL_Delay(5);
         }
         int temp=arr[i];
         arr[i]=arr[minIndex];
         arr[minIndex]=temp;
     }
+}
+
+void sel_sort_call(){
+    auto start = high_resolution_clock::now();
+    selectionSort();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "Time Taken: " << duration.count() << "s" << endl;
 }
 
 void loadArr()
@@ -408,7 +462,7 @@ void execute()
                             loadArr();
                             cout<<"\nSELECTION SORT STARTED.\n";
                             complete=false;
-                            selectionSort();
+                            sel_sort_call();
                             complete=true;
                             cout<<"\nSELECTION SORT COMPLETE.\n";
                             break;
@@ -416,7 +470,7 @@ void execute()
                             loadArr();
                             cout<<"\nINSERTION SORT STARTED.\n";
                             complete=false;
-                            insertionSort();
+                            ins_sort_call();
                             complete=true;
                             cout<<"\nINSERTION SORT COMPLETE.\n";
                             break;
@@ -424,7 +478,7 @@ void execute()
                             loadArr();
                             cout<<"\nBUBBLE SORT STARTED.\n";
                             complete=false;
-                            bubbleSort();
+                            bub_sort_call();
                             complete=true;
                             cout<<"\nBUBBLE SORT COMPLETE.\n";
                             break;
@@ -432,7 +486,7 @@ void execute()
                             loadArr();
                             cout<<"\nMERGE SORT STARTED.\n";
                             complete=false;
-                            mergeSort(arr, 0, arrSize-1);
+                            mergesort_call(arr, 0, arrSize - 1);
                             complete=true;
                             cout<<"\nMERGE SORT COMPLETE.\n";
                             break;
@@ -440,7 +494,7 @@ void execute()
                             loadArr();
                             cout<<"\nQUICK SORT STARTED.\n";
                             complete=false;
-                            quickSort(arr, 0, arrSize-1);
+                            quicksort_call(arr, 0, arrSize);
                             complete=true;
                             cout<<"\nQUICK SORT COMPLETE.\n";
                             break;
@@ -448,7 +502,7 @@ void execute()
                             loadArr();
                             cout<<"\nHEAP SORT STARTED.\n";
                             complete=false;
-                            inplaceHeapSort(arr, arrSize);
+                            heap_call(arr, arrSize);
                             complete=true;
                             cout<<"\nHEAP SORT COMPLETE.\n";
                             break;
